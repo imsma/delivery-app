@@ -1,6 +1,8 @@
 server:
   port: 8003
 spring:
+  application:
+    name: order
   rabbitmq:
     host: localhost
     port: 5673
@@ -11,5 +13,9 @@ spring:
     username: delivery_admin
     password: admin
     driver-class-name: org.postgresql.Driver
+  sql.init.mode: always
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
