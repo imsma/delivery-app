@@ -1,0 +1,11 @@
+### Get Menu Items
+GET http://localhost:8003/api/v1/menu
+
+### Create Menu Item
+POST http://localhost:8003/api/v1/menu
+Content-Type: application/json
+
+{
+  "name": "Kukkar",
+  "price": 17.59
+}
