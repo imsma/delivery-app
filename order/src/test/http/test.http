@@ -9,3 +9,13 @@ Content-Type: application/json
   "name": "Kukkar",
   "price": 17.59
 }
+
+
+### Create Order
+POST http://localhost:8003/api/v1/order
+Content-Type: application/json
+
+{
+    "itemIDs": ["8e9179f4-d1fa-e606-e490-04fb7c8c9370", "a2881a50-17cb-64bf-e253-8c88f5c71728", "189e3797-5e83-c990-2ec3-1ab1c85991af", "73efe44a-f13c-1499-5375-b32e032ee36d"]
+
+}

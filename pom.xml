@@ -17,8 +17,8 @@
 
          <modules>
             <module>core</module>
-            <module>delivery</module>
             <module>order</module>
+            <module>delivery</module>
          </modules>
 
          <properties>

@@ -8,6 +8,9 @@ spring:
     port: 5673
     username: guest
     password: guest
+    exchange: order.exchange
+    routing-key: order.created
+    queue-name: delivery.queue
   datasource:
     url: jdbc:postgresql://localhost:5433/food_delivery
     username: delivery_admin

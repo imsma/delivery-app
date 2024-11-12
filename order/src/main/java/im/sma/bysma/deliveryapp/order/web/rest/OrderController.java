@@ -1,5 +1,6 @@
 package im.sma.bysma.deliveryapp.order.web.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import im.sma.bysma.deliveryapp.order.domain.MenuEntity;
+import im.sma.bysma.deliveryapp.order.dto.CreateOrderRequest;
 import im.sma.bysma.deliveryapp.order.dto.MenuItemRequest;
 import im.sma.bysma.deliveryapp.order.dto.MenuResponse;
+import im.sma.bysma.deliveryapp.order.dto.OrderItem;
+import im.sma.bysma.deliveryapp.order.event.OrderCreateEvent;
+import im.sma.bysma.deliveryapp.order.publisher.OrderEventPublisher;
 import im.sma.bysma.deliveryapp.order.repository.MenuRepository;
 import im.sma.bysma.deliveryapp.order.utility.MenuItemMapper;
 
@@ -20,10 +25,12 @@ import im.sma.bysma.deliveryapp.order.utility.MenuItemMapper;
 @RequestMapping("/api/v1")
 public class OrderController {
 
-    private MenuRepository menuRepository;
+    private final MenuRepository menuRepository;
+    private final OrderEventPublisher orderEventPublisher;
 
-    public OrderController(MenuRepository menuRepository) {
+    public OrderController(MenuRepository menuRepository, OrderEventPublisher orderEventPublisher) {
         this.menuRepository = menuRepository;
+        this.orderEventPublisher = orderEventPublisher;
     }
 
     @GetMapping("/menu")
@@ -42,6 +49,15 @@ public class OrderController {
                 .build();
         menuRepository.save(menuEntity);
         return MenuItemMapper.toResponse(menuEntity);
+    }
+
+    @PostMapping("/order")
+    public void createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        List<MenuEntity> selectedItems = menuRepository.findAllById(createOrderRequest.itemIDs());
+        List<OrderItem> orderItems = new ArrayList<>();
+        selectedItems.forEach(
+                item -> orderItems.add(OrderItem.instance(item.getItemName(), item.getPrice())));
+        orderEventPublisher.publishOrderCreatedEvent(OrderCreateEvent.instance(orderItems));
     }
 
 }
