@@ -1,0 +1,15 @@
+server:
+  port: 8001
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: guest
+    password: guest
+  datasource:
+    url: jdbc:postgresql://localhost:5433/food_delivery
+    username: delivery_admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
