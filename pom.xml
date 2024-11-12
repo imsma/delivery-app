@@ -8,10 +8,17 @@
          <description>Spring boot delivery app </description>
          <packaging>pom</packaging>
 
+         <parent>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-parent</artifactId>
+            <version>3.3.5</version>
+            <relativePath/> <!-- lookup parent from repository -->
+        </parent>
+
          <modules>
-            <module>core-module</module>
-            <module>delivery-service</module>
-            <module>order-service</module>
+            <module>core</module>
+            <module>delivery</module>
+            <module>order</module>
          </modules>
 
          <properties>
